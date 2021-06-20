@@ -61,7 +61,7 @@ class Board extends Component {
     }
     // board.map(row => row.fill(0))
     // board.map(row => row.map(element => element + Math.random()))
-    console.log(board)
+    return board;
   }
 
   /** handle changing a cell: update board & determine if winner */
@@ -92,16 +92,21 @@ class Board extends Component {
   /** Render game board or winning message. */
 
   render() {
+    const startBoard = this.createBoard();
     return (
       <div>
-        {this.createBoard()}
+        <h1>Lights Out</h1>
         <table className="Board">
           <tbody>
+          {startBoard.map(row => (
             <tr>
-              <Cell isLit={true} />
-              <Cell isLit={true} />
-              <Cell isLit={true} />
+              {row.map(col => (
+                <Cell
+                  isLit={col}
+                />
+              ))}
             </tr>
+          ))}
           </tbody>
         </table>
       </div>

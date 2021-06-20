@@ -41,7 +41,7 @@ class Board extends Component {
 
     this.state = {
       hasWon: false,
-      board: Array.from({ length: this.props.nCols })
+      board: this.createBoard()
     }
   }
 
@@ -84,7 +84,16 @@ class Board extends Component {
 
     // win when every cell is turned off
     // TODO: determine is the game has been won
-
+    function checkWinner(arr) {
+      let counter = 0;
+      const isTrue = (currentValue) => currentValue === true;
+      for (const row of arr) {
+        counter += row.every(!isTrue) ? 1 : 0;
+      }
+      return counter;
+    }
+    
+    let hasWon = checkWinner(board) === board.length ? true : false;
     // this.setState({board, hasWon});
   }
 
@@ -92,17 +101,19 @@ class Board extends Component {
   /** Render game board or winning message. */
 
   render() {
-    const startBoard = this.createBoard();
+    const startBoard = this.state.board;
     return (
       <div>
         <h1>Lights Out</h1>
         <table className="Board">
           <tbody>
-          {startBoard.map(row => (
-            <tr>
-              {row.map(col => (
+          {startBoard.map((row, i) => (
+            <tr key={i}>
+              {row.map((col, j) => (
                 <Cell
+                  key={`${i}-${j}`}
                   isLit={col}
+                  flipCellsAroundMe={this.flipCellsAround}
                 />
               ))}
             </tr>

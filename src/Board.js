@@ -38,11 +38,11 @@ class Board extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       hasWon: false,
       board: this.createBoard()
-    }
+    };
+    this.flipCellsAround = this.flipCellsAround.bind(this);
   }
 
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
@@ -78,6 +78,7 @@ class Board extends Component {
       if (x >= 0 && x < ncols && y >= 0 && y < nrows) {
         board[y][x] = !board[y][x];
       }
+      return board;
     }
 
     // TODO: flip this cell and the cells around it
@@ -93,8 +94,8 @@ class Board extends Component {
       return counter;
     }
     
-    let hasWon = checkWinner(board) === board.length ? true : false;
-    // this.setState({board, hasWon});
+    
+    // this.setState({board: });
   }
 
 
@@ -102,22 +103,20 @@ class Board extends Component {
 
   render() {
     const startBoard = this.state.board;
+    let tblBoard = [];
+    for (let y = 0; y < this.props.nRows; y++) {
+      let row = [];
+      for (let x = 0; x < this.props.nCols; x++) {
+        row.push(<Cell isLit={this.state.board[y][x]} />)
+      }
+      tblBoard.push(<tr>{row}</tr>)
+    }
     return (
       <div>
         <h1>Lights Out</h1>
         <table className="Board">
           <tbody>
-          {startBoard.map((row, i) => (
-            <tr key={i}>
-              {row.map((col, j) => (
-                <Cell
-                  key={`${i}-${j}`}
-                  isLit={col}
-                  flipCellsAroundMe={this.flipCellsAround}
-                />
-              ))}
-            </tr>
-          ))}
+          {tblBoard}
           </tbody>
         </table>
       </div>

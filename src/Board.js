@@ -113,12 +113,15 @@ class Board extends Component {
           <h1>You Won!</h1>
         ) : (
           <div>
-          <h1>Lights Out</h1>
-          <table className="Board">
-            <tbody>
-              {tblBoard}
-            </tbody>
-          </table>
+            <div className='Board-title'>
+              <div className='neon-orange'>Lights</div>
+              <div className='neon-blue'>Out</div>
+            </div>
+            <table className="Board">
+              <tbody>
+                {tblBoard}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
